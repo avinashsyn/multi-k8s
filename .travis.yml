@@ -3,7 +3,7 @@ services:
   -docker
 
 before_install:
-  - docker build -t avinash68/react-test -f .client/Dockerfile.dev ./client
+  - docker build -t avinash68/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   - docker run avinash68/react-test npm test -- -- coverage
