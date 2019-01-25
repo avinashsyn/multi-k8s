@@ -8,7 +8,6 @@ before_install:
 script:
   - docker run avinash68/react-test npm test -- --coverage
 
-
 after_success:
   - docker build -t avinash68/multi-client ./client
   - docker build -t avinash68/multi-nginx ./nginx
@@ -21,3 +20,16 @@ after_success:
   - docker push avinash68/multi-nginx
   - docker push avinash68/multi-server
   - docker push avinash68/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-west-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-us-west-1-306476627547
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
